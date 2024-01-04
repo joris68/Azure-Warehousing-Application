@@ -1,0 +1,73 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/0.1.2-preview/CreateUIDefinition.MultiVm.json#",
+    "handler": "Microsoft.Azure.CreateUIDef",
+    "version": "0.1.2-preview",
+    "parameters": {
+        "config": {
+            "isWizard": false,
+            "basics": { }
+        },
+        "basics": [ 
+            {
+                "name": "InfoBox1",
+                "type": "Microsoft.Common.InfoBox",
+                "visible": true,
+                "options": {
+                  "icon": "Info",
+                  "text": "Make sure the selected Resourcegroup within the selected Subscription is where you want to deploy the architecture",
+                  "uri": "https://www.microsoft.com"
+                }
+              },
+              {
+                "name": "InfoBox2",
+                "type": "Microsoft.Common.InfoBox",
+                "visible": true,
+                "options": {
+                  "icon": "Info",
+                  "text": "Please Provide Values for the SQL-Username and the SQL-Password for the Database connections",
+                  "uri": "https://www.microsoft.com"
+                }
+              },
+
+              {
+                "name": "SQlUserName",
+                "type": "Microsoft.Compute.UserNameTextBox",
+                "label": "SQL User Login-Name",
+                "defaultValue": "",
+                "toolTip": "Please provide your preferred Username for the SQL-Login",
+                "constraints": {
+                  "required": true,
+                  "regex": "^[a-zA-Z][a-zA-Z0-9]{8,25}$", 
+                  "validationMessage": "Name has to start with a letter,  must have minimum lenght of 8, cannot be longer than 25 characters and use alphanumeric characters"
+                },
+                "osPlatform": "Windows",
+                "visible": true
+              },
+
+
+              {
+                "name": "SQlPassword",
+                "type": "Microsoft.Compute.UserNameTextBox",
+                "label": "SQL User Password",
+                "defaultValue": "",
+                "toolTip": "Please provide your preferred Username for the SQL-Login",
+                "constraints": {
+                  "required": true,
+                  "regex": "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{10,}$", 
+                  "validationMessage": "Password must be at least 10 characters long, must have at least one capital letter, must have at least one lowercase letter, must have at least one digit, must have at least one special character out of this set [@#$%^&+=*!]"
+                },
+                "osPlatform": "Windows",
+                "visible": true
+              }
+
+        ],
+        "steps": [ ],
+        "outputs": {
+          "SQLLogin": "[basics('SQlUserName')]",
+          "SQLPassword": "[basics('SQLPassword')]",
+          "location": "[location()]"
+          
+         },
+        "resourceTypes": []
+    }
+}
